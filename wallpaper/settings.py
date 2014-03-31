@@ -1,18 +1,35 @@
 # Django settings for wallpaper project.
+import os
+import site
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
+
+MAIN_APP_PATH = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.abspath(os.path.join(MAIN_APP_PATH, '../'))
+APPNAME = os.path.basename(ROOT)
+
+path = lambda *a: os.path.join(ROOT, *a)
+
+
+def abs_path(*args):
+    return os.path.join(ROOT, *args)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
 
+
+site.addsitedir(path('apps'))
+site.addsitedir(path('lib'))
+site.addsitedir(path(MAIN_APP_PATH))
+
 MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': abs_path('database.db3'),                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -119,6 +136,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    'pic',
 )
 
 # A sample logging configuration. The only tangible logging
