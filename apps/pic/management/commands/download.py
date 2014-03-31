@@ -32,7 +32,7 @@ def parse_page(page = 1):
 def is_url_downloaded(url):
 
     basename = os.path.basename(url)
-    return Pic.Query(basename) is None
+    return Pic.Query(basename) is not None
 
 def download_url(url, dest=''):
     if not dest:
